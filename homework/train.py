@@ -7,13 +7,13 @@ import argparse
 
 def train(args):
     model = model_factory[args.model]()
-    train_loader = load_data("./data/train")
     val_loader = load_data("./data/valid")
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=0.1e-4)
     criterion = ClassificationLoss()
-    writer = SummaryWriter(log_dir=f'runs/{args.model}_train_7')
+    writer = SummaryWriter(log_dir=f'runs/{args.model}_train_10')
 
     for epoch in range(args.epochs):
+        train_loader = load_data("./data/train")
         model.train()
         total_loss = 0
         count = 0
@@ -49,6 +49,6 @@ def train(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--model', choices=['linear', 'mlp'], default='linear')
-    parser.add_argument('-e', '--epochs', type=int, default=15)
+    parser.add_argument('-e', '--epochs', type=int, default=20)
     args = parser.parse_args()
     train(args)

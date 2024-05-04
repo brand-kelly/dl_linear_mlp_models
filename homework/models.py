@@ -48,10 +48,10 @@ class MLPClassifier(torch.nn.Module):
         """
         Your code here
         """
-        self.fc_in = nn.Linear(in_features = 3*64*64, out_features = 64)
+        self.fc_in = nn.Linear(in_features = 3*64*64, out_features = 50)
         self.relu = nn.ReLU()
         self.fc2 = nn.Linear(in_features = 64, out_features = 32)
-        self.fc_out = nn.Linear(in_features = 32, out_features = 6)
+        self.fc_out = nn.Linear(in_features = 50, out_features = 6)
 
     def forward(self, x):
         """
@@ -63,8 +63,8 @@ class MLPClassifier(torch.nn.Module):
         x = x.view(-1, 3*64*64)
         x = self.fc_in(x)
         x = self.relu(x)
-        x = self.fc2(x)
-        x = self.relu(x)
+        # x = self.fc2(x)
+        # x = self.relu(x)
         x = self.fc_out(x)
         return x
 
