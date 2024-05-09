@@ -8,12 +8,12 @@ import argparse
 def train(args):
     model = model_factory[args.model]()
     val_loader = load_data("./data/valid")
-    optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=0.1e-4)
+    train_loader = load_data("./data/train")
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=1e-4)
     criterion = ClassificationLoss()
     writer = SummaryWriter(log_dir=f'runs/{args.model}_train_10')
 
     for epoch in range(args.epochs):
-        train_loader = load_data("./data/train")
         model.train()
         total_loss = 0
         count = 0
